@@ -34,7 +34,7 @@ body {
 
   .dark {
     --background: 249 100% 3.9%;
-    --foreground: 248 100% 88%;
+    --foreground: 200 100% 80%;
     --card: 224 71.4% 4.1%;
     --card-foreground: 210 20% 98%;
     --popover: 224 71.4% 4.1%;
@@ -62,5 +62,19 @@ body {
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+.animate-slide {
+  animation: 15s slide linear infinite;
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-100%);
   }
 }
