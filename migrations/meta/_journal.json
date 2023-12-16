@@ -8,6 +8,20 @@
       "when": 1702654922639,
       "tag": "0000_pink_praxagora",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1702734683362,
+      "tag": "0001_chunky_rick_jones",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1702736371085,
+      "tag": "0002_wandering_reavers",
+      "breakpoints": true
     }
   ]
 }
