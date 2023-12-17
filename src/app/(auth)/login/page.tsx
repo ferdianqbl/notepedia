@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Loader from "@/components/unit/loader";
+import { login } from "@/lib/server/auth";
 import { LoginSchema, type LoginSchemaType } from "@/lib/validations/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -26,6 +27,7 @@ const Page = () => {
 
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = form;
@@ -33,7 +35,13 @@ const Page = () => {
   const [submitError, setSubmitError] = useState("");
   const router = useRouter();
 
-  const onSubmit = async (data: LoginSchemaType) => {};
+  const onSubmit = async (data: LoginSchemaType) => {
+    const res = await login(data);
+    if (res?.error) {
+      reset();
+      setSubmitError(res.error.message);
+    } else console.log(res);
+  };
 
   return (
     <Form {...form}>

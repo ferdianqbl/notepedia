@@ -10,7 +10,7 @@ import Image from "next/image";
 const Page = () => {
   return (
     <>
-      <section>
+      <section className="pt-10">
         <div className="gap-4 px-4 overflow-hidden sm:flex sm:items-center sm:justify-center sm:flex-col">
           <TitleSection
             pill="✨Your Workspace, Perfected"
@@ -102,7 +102,7 @@ const Page = () => {
           </div>
         </div>
       </section>
-      <section>
+      <section className="pb-10">
         <div className="px-4 mt-20 overflow-x-hidden">
           <TitleSection
             title="Trusted by all"
