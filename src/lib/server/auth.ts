@@ -1,17 +1,48 @@
 "use server";
-
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
-import { LoginSchemaType } from "../validations/auth";
+import { LoginSchemaType, RegisterSchemaType } from "../validations/auth";
 import { cookies } from "next/headers";
+
 export async function login({ email, password }: LoginSchemaType) {
-  try {
-    const client = createRouteHandlerClient({ cookies });
-    const res = await client.auth.signInWithPassword({
-      email,
-      password,
-    });
-    return res;
-  } catch (error) {
-    console.log(error);
-  }
+  const client = createRouteHandlerClient({ cookies });
+  const res = await client.auth.signInWithPassword({
+    email,
+    password,
+  });
+  return res;
+}
+
+export async function signUp({
+  email,
+  password,
+  confirmPassword,
+}: RegisterSchemaType) {
+  const client = createRouteHandlerClient({ cookies });
+  const { data } = await client.from("profiles").select("*").eq("email", email);
+
+  if (data?.length! > 0)
+    return {
+      error: {
+        message: "Email already exists",
+        data,
+      },
+    };
+
+  const isPasswordMatch = password === confirmPassword;
+  if (!isPasswordMatch)
+    return {
+      error: {
+        message: "Password does not match",
+      },
+    };
+
+  const res = await client.auth.signUp({
+    email,
+    password,
+    options: {
+      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
+    },
+  });
+
+  return res;
 }

@@ -29,7 +29,7 @@ const Page = () => {
     register,
     reset,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = form;
 
   const [submitError, setSubmitError] = useState("");
@@ -39,7 +39,7 @@ const Page = () => {
     const res = await login(data);
     if (res?.error) {
       reset();
-      setSubmitError(res.error.message);
+      setSubmitError(res.error.message.toString());
     } else console.log(res);
   };
 
@@ -76,7 +76,7 @@ const Page = () => {
                     id="email"
                     placeholder="Email"
                     {...field}
-                    {...form.register("email")}
+                    {...register("email")}
                   />
                 </FormControl>
                 <FormMessage />
@@ -91,7 +91,7 @@ const Page = () => {
               <FormItem className="w-full">
                 <FormControl>
                   <Input
-                    {...form.register("password")}
+                    {...register("password")}
                     type="password"
                     id="password"
                     placeholder="Password"
@@ -111,6 +111,12 @@ const Page = () => {
         >
           {isSubmitting ? <Loader /> : "Login"}
         </Button>
+        <p className="">
+          Don{"'"}t have an account?{" "}
+          <Link href={"/register"} className="text-primary">
+            Sign up
+          </Link>
+        </p>
       </form>
     </Form>
   );
