@@ -76,6 +76,7 @@ const Page = () => {
                     id="email"
                     placeholder="Email"
                     {...field}
+                    {...form.register("email")}
                   />
                 </FormControl>
                 <FormMessage />
@@ -90,6 +91,7 @@ const Page = () => {
               <FormItem className="w-full">
                 <FormControl>
                   <Input
+                    {...form.register("password")}
                     type="password"
                     id="password"
                     placeholder="Password"
