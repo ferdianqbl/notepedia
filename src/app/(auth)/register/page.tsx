@@ -10,6 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { signUp } from "@/lib/server/auth";
 import {
   RegisterSchema,
   type RegisterSchemaType,
@@ -33,7 +34,6 @@ const Page = () => {
   });
 
   const {
-    register,
     reset,
     handleSubmit,
     formState: { isSubmitting },
@@ -46,7 +46,7 @@ const Page = () => {
 
   const confirmationAndErrorStyles = useMemo(
     () =>
-      clsx("bg-primary", {
+      clsx("bg-primary text-primary-blue-900", {
         "bg-red-500/10": codeExchangeError,
         "border-red-500/50": codeExchangeError,
         "text-red-700": codeExchangeError,
@@ -55,11 +55,13 @@ const Page = () => {
   );
 
   const onSubmit = async (data: RegisterSchemaType) => {
-    // const res = await login(data);
-    // if (res?.error) {
-    //   reset();
-    //   setSubmitError(res.error.message.toString());
-    // } else console.log(res);
+    const res = await signUp(data);
+    if (res?.error) {
+      reset();
+      setSubmitError(res.error.message.toString());
+      return;
+    }
+    setConfirmation(true);
   };
 
   return (
@@ -81,15 +83,16 @@ const Page = () => {
           </FormDescription>
         </div>
 
+        {submitError && <FormMessage>{submitError}</FormMessage>}
+
         {!confirmation && !codeExchangeError && (
           <>
             <div className="flex flex-col items-center justify-center w-full gap-3">
-              {submitError && <FormMessage>{submitError}</FormMessage>}
               <FormField
                 name="email"
                 disabled={isSubmitting}
                 control={form.control}
-                render={(field) => (
+                render={({ field }) => (
                   <FormItem className="w-full">
                     <FormControl>
                       <Input
@@ -97,7 +100,6 @@ const Page = () => {
                         id="email"
                         placeholder="Email"
                         {...field}
-                        {...register("email")}
                       />
                     </FormControl>
                     <FormMessage />
@@ -108,11 +110,10 @@ const Page = () => {
                 name="password"
                 disabled={isSubmitting}
                 control={form.control}
-                render={(field) => (
+                render={({ field }) => (
                   <FormItem className="w-full">
                     <FormControl>
                       <Input
-                        {...register("password")}
                         type="password"
                         id="password"
                         placeholder="Password"
@@ -127,11 +128,10 @@ const Page = () => {
                 name="confirmPassword"
                 disabled={isSubmitting}
                 control={form.control}
-                render={(field) => (
+                render={({ field }) => (
                   <FormItem className="w-full">
                     <FormControl>
                       <Input
-                        {...register("confirmPassword")}
                         type="password"
                         id="confirmPassword"
                         placeholder="Password Confirmation"
@@ -154,7 +154,6 @@ const Page = () => {
           </>
         )}
 
-        {submitError && <FormMessage>{submitError}</FormMessage>}
         <span className="">
           Already have an account?{" "}
           <Link href="/login" className="text-primary">

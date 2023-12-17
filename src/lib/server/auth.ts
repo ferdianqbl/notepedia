@@ -18,7 +18,7 @@ export async function signUp({
   confirmPassword,
 }: RegisterSchemaType) {
   const client = createRouteHandlerClient({ cookies });
-  const { data } = await client.from("profiles").select("*").eq("email", email);
+  const { data } = await client.from("users").select("*").eq("email", email);
 
   if (data?.length! > 0)
     return {

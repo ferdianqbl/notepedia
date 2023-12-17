@@ -39,8 +39,8 @@ const Page = () => {
     const res = await login(data);
     if (res?.error) {
       reset();
-      setSubmitError(res.error.message.toString());
-    } else console.log(res);
+      setSubmitError(res.error.message);
+    } else router.push("/dashboard");
   };
 
   return (
@@ -68,7 +68,7 @@ const Page = () => {
             name="email"
             disabled={isSubmitting}
             control={form.control}
-            render={(field) => (
+            render={({ field }) => (
               <FormItem className="w-full">
                 <FormControl>
                   <Input
@@ -76,7 +76,6 @@ const Page = () => {
                     id="email"
                     placeholder="Email"
                     {...field}
-                    {...register("email")}
                   />
                 </FormControl>
                 <FormMessage />
@@ -87,11 +86,10 @@ const Page = () => {
             name="password"
             disabled={isSubmitting}
             control={form.control}
-            render={(field) => (
+            render={({ field }) => (
               <FormItem className="w-full">
                 <FormControl>
                   <Input
-                    {...register("password")}
                     type="password"
                     id="password"
                     placeholder="Password"
