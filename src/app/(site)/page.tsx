@@ -48,7 +48,7 @@ const Page = () => {
         "
         >
           {[...Array(2)].map((arr) => (
-            <div key={arr} className="flex flex-nowrap animate-slide ">
+            <div key={randomUUID()} className="flex flex-nowrap animate-slide ">
               {CLIENTS.map((client) => (
                 <div
                   key={client.alt}
@@ -64,7 +64,7 @@ const Page = () => {
                     src={client.logo}
                     alt={client.alt}
                     width={200}
-                    className="object-contain max-w-none"
+                    className="object-cover"
                   />
                 </div>
               ))}
@@ -85,10 +85,9 @@ const Page = () => {
           flex
           justify-center
           items-center
-          relative
-          sm:ml-0
           rounded-2xl
-          border-8
+          border-4
+          overflow-hidden
           border-secondary-purple-300 
           border-opacity-10
         "
@@ -96,7 +95,7 @@ const Page = () => {
             <Image
               src="/cal.png"
               alt="Banner"
-              className="rounded-2xl"
+              className=""
               width={500}
               height={400}
             />
@@ -104,7 +103,7 @@ const Page = () => {
         </div>
       </section>
       <section>
-        <div className="relative flex flex-col px-4 mt-20 overflow-x-hidden sm:px-6">
+        <div className="px-4 mt-20 overflow-x-hidden">
           <TitleSection
             title="Trusted by all"
             subheading="Join thousands of satisfied users who rely on our platform for their 
@@ -114,10 +113,10 @@ const Page = () => {
           {[...Array(2)].map((arr, index) => (
             <div
               key={randomUUID()}
-              className={cn("mt-10 flex flex-nowrap gap-4 self-start", {
+              className={cn("mt-10 flex flex-nowrap gap-4 w-full", {
                 "flex-row-reverse": index === 1,
-                "animate-[slide_250s_linear_infinite]": true,
-                "animate-[slide_250s_linear_infinite_reverse]": index === 1,
+                "animate-[slide_20s_linear_infinite]": true,
+                "animate-[slide_20s_linear_infinite_reverse]": index === 1,
                 "ml-[100vw]": index === 1,
               })}
             >
