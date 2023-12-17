@@ -1,12 +1,17 @@
+import CustomCard from "@/components/pages/landing-page/custom-card";
 import TitleSection from "@/components/pages/landing-page/title-section";
-import { CLIENTS } from "@/lib/constants";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { CardDescription, CardTitle } from "@/components/ui/card";
+import { CLIENTS, USERS } from "@/lib/constants";
+import { cn } from "@/lib/utils";
+import { randomUUID } from "crypto";
 import Image from "next/image";
 
 const Page = () => {
   return (
     <>
       <section>
-        <div className="gap-4 px-4 mt-10 overflow-hidden sm:flex sm:items-center sm:justify-center sm:flex-col">
+        <div className="gap-4 px-4 overflow-hidden sm:flex sm:items-center sm:justify-center sm:flex-col">
           <TitleSection
             pill="✨Your Workspace, Perfected"
             title="All-In-One Collaboration and Productivity Platform"
@@ -96,6 +101,60 @@ const Page = () => {
               height={400}
             />
           </div>
+        </div>
+      </section>
+      <section>
+        <div className="relative flex flex-col px-4 mt-20 overflow-x-hidden sm:px-6">
+          <TitleSection
+            title="Trusted by all"
+            subheading="Join thousands of satisfied users who rely on our platform for their 
+            personal and professional productivity needs."
+            pill="Testimonials"
+          />
+          {[...Array(2)].map((arr, index) => (
+            <div
+              key={randomUUID()}
+              className={cn("mt-10 flex flex-nowrap gap-4 self-start", {
+                "flex-row-reverse": index === 1,
+                "animate-[slide_250s_linear_infinite]": true,
+                "animate-[slide_250s_linear_infinite_reverse]": index === 1,
+                "ml-[100vw]": index === 1,
+              })}
+            >
+              {USERS.map((testimonial, index) => (
+                <CustomCard
+                  key={testimonial.name}
+                  className="w-[500px]
+                  shrink-0
+                  rounded-xl
+                  dark:bg-gradient-to-t
+                  dark:from-border dark:to-background
+                "
+                  header={
+                    <div className="flex items-center gap-4 ">
+                      <Avatar>
+                        <AvatarImage src={`/avatars/${index + 1}.png`} />
+                        <AvatarFallback>AV</AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <CardTitle className="text-foreground">
+                          {testimonial.name}
+                        </CardTitle>
+                        <CardDescription className="dark:text-secondary-purple-800">
+                          {testimonial.name.toLocaleLowerCase()}
+                        </CardDescription>
+                      </div>
+                    </div>
+                  }
+                  cardContent={
+                    <p className="dark:text-washed-purple-800">
+                      {testimonial.message}
+                    </p>
+                  }
+                ></CustomCard>
+              ))}
+            </div>
+          ))}
         </div>
       </section>
     </>
