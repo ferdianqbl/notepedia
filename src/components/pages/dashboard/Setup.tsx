@@ -7,11 +7,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { SubscriptionType } from "@/lib/supabase/supabase.types";
 import { AuthUser } from "@supabase/supabase-js";
 
 type Props = {
   user: AuthUser;
-  subscription: {} | null;
+  subscription: SubscriptionType | null;
 };
 
 const Setup: React.FC<Props> = ({ subscription, user }) => {
