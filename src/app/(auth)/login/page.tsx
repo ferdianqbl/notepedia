@@ -26,7 +26,6 @@ const Page = () => {
   });
 
   const {
-    register,
     reset,
     handleSubmit,
     formState: { isSubmitting },
@@ -40,7 +39,7 @@ const Page = () => {
     if (res?.error) {
       reset();
       setSubmitError(res.error.message);
-    } else router.push("/dashboard");
+    } else router.replace("/dashboard");
   };
 
   return (
