@@ -10,15 +10,21 @@ type Props = {
 
 const EmojiPicker: React.FC<Props> = ({ children, getValue }) => {
   const router = useRouter();
-  const Picker = dynamic(() => import("emoji-picker-react"));
+  const Picker = dynamic(() => import("emoji-picker-react"), { ssr: false });
   const pickerHandler = (selectedEmoji: any) => {
     if (getValue) getValue(selectedEmoji.emoji);
   };
   return (
     <Popover>
       <PopoverTrigger className="cursor-pointer">{children}</PopoverTrigger>
-      <PopoverContent className="border-none p-0">
-        <Picker onEmojiClick={pickerHandler} />
+      <PopoverContent className="p-0 border-none w-80">
+        <Picker
+          onEmojiClick={pickerHandler}
+          lazyLoadEmojis
+          searchDisabled
+          height={"20rem"}
+          width={"100%"}
+        />
       </PopoverContent>
     </Popover>
   );
