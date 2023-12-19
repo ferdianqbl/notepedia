@@ -341,7 +341,7 @@ const AppStateProvider: React.FC<AppStateProviderProps> = ({ children }) => {
   }, [folderId, workspaceId]);
 
   useEffect(() => {
-    console.log("App State Changed", state);
+    // console.log("App State Changed", state);
   }, [state]);
 
   return (
