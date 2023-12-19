@@ -24,10 +24,10 @@ export const createWorkspace = async (workspace: WorkspaceType) => {
 
 export const getPrivateWorkspaces = async (userId: string) => {
   const isValid = validate(userId);
-  if (!isValid) return { data: null, error: "Error id is not valid" };
+  if (!isValid) return { data: [], error: "Error id is not valid" };
 
   try {
-    const res: WorkspaceType[] | null = await db
+    const res: WorkspaceType[] | [] = await db
       .select()
       .from(workspaces)
       .orderBy(workspaces.createdAt)
@@ -54,10 +54,10 @@ export const getPrivateWorkspaces = async (userId: string) => {
 
 export const getCollaboratingWorkspaces = async (userId: string) => {
   const isValid = validate(userId);
-  if (!isValid) return { data: null, error: "Error id is not valid" };
+  if (!isValid) return { data: [], error: "Error id is not valid" };
 
   try {
-    const res: WorkspaceType[] | null = await db
+    const res: WorkspaceType[] | [] = await db
       .select({
         id: workspaces.id,
         createdAt: workspaces.createdAt,
@@ -84,6 +84,30 @@ export const getCollaboratingWorkspaces = async (userId: string) => {
     );
     return { data: null, error: "Error" };
   }
+};
+
+export const getSharedWorkspaces = async (userId: string) => {
+  const isValid = validate(userId);
+  if (!isValid) return { data: [], error: "Error id is not valid" };
+
+  const sharedWorkspaces: WorkspaceType[] | [] = await db
+    .selectDistinct({
+      id: workspaces.id,
+      createdAt: workspaces.createdAt,
+      updatedAt: workspaces.updatedAt,
+      workspaceOwner: workspaces.workspaceOwner,
+      title: workspaces.title,
+      iconId: workspaces.iconId,
+      data: workspaces.data,
+      inTrash: workspaces.inTrash,
+      logo: workspaces.logo,
+      bannerUrl: workspaces.bannerUrl,
+    })
+    .from(workspaces)
+    .orderBy(workspaces.createdAt)
+    .innerJoin(collaborators, eq(workspaces.id, collaborators.workspaceId))
+    .where(eq(workspaces.workspaceOwner, userId));
+  return sharedWorkspaces;
 };
 
 // Subscriptions
