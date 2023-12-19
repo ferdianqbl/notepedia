@@ -4,6 +4,8 @@ import "./globals.css";
 import ThemeProvider from "@/lib/providers/next-theme";
 import AppStateProvider from "@/lib/providers/state-provider";
 import { Toaster } from "@/components/ui/toaster";
+import SupabaseUserProvider from "@/lib/providers/supabase-user-provider";
+
 // import db from "@/lib/supabase/db";
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -23,12 +25,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={dmSans.className}>
-        <AppStateProvider>
-          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-            {children}
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <AppStateProvider>
+            <SupabaseUserProvider>{children}</SupabaseUserProvider>
             <Toaster />
-          </ThemeProvider>
-        </AppStateProvider>
+          </AppStateProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

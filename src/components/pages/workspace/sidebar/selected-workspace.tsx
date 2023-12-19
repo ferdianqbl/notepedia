@@ -30,7 +30,7 @@ const SelectedWorkspace: React.FC<Props> = ({ workspace, onClick }) => {
     <Link
       href={`/dashboard/${workspace.id}`}
       onClick={clickHandler}
-      className="flex flex-row items-center justify-center gap-4 p-2 my-2 transition-all rounded-md cursor-pointer hover:bg-muted"
+      className="flex flex-row items-center justify-center gap-2 px-4 py-2 mt-3 transition-all rounded-md cursor-pointer hover:bg-muted"
     >
       <Image
         src={logo}
