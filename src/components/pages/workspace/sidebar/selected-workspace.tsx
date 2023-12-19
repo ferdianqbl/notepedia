@@ -8,7 +8,7 @@ import Link from "next/link";
 
 type Props = {
   workspace: WorkspaceType;
-  onClick?: (option: WorkspaceType) => void;
+  onClick?: (workspace: WorkspaceType) => void;
 };
 
 const SelectedWorkspace: React.FC<Props> = ({ workspace, onClick }) => {
@@ -30,7 +30,7 @@ const SelectedWorkspace: React.FC<Props> = ({ workspace, onClick }) => {
     <Link
       href={`/dashboard/${workspace.id}`}
       onClick={clickHandler}
-      className="flex flex-row items-center justify-center gap-2 px-4 py-2 mt-3 transition-all rounded-md cursor-pointer hover:bg-muted"
+      className="flex flex-row items-center gap-2 px-4 py-2 transition-all duration-500 rounded-md cursor-pointer hover:bg-muted"
     >
       <Image
         src={logo}
@@ -40,13 +40,7 @@ const SelectedWorkspace: React.FC<Props> = ({ workspace, onClick }) => {
         className="object-cover object-center rounded-full"
       />
       <div className="flex flex-col">
-        <p
-          className="text-base 
-        w-[170px] 
-        overflow-hidden 
-        overflow-ellipsis 
-        whitespace-nowrap"
-        >
+        <p className="w-full overflow-hidden text-sm overflow-ellipsis whitespace-nowrap">
           {workspace.title}
         </p>
       </div>
