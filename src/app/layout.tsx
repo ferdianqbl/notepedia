@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
-import db from "../lib/supabase/db";
 import ThemeProvider from "@/lib/providers/next-theme";
+import AppStateProvider from "@/lib/providers/state-provider";
+import { Toaster } from "@/components/ui/toaster";
 const dmSans = DM_Sans({
   subsets: ["latin"],
 });
@@ -17,13 +18,15 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // console.log(db);
   return (
     <html lang="en">
       <body className={dmSans.className}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          {children}
-        </ThemeProvider>
+        <AppStateProvider>
+          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+            {children}
+            <Toaster />
+          </ThemeProvider>
+        </AppStateProvider>
       </body>
     </html>
   );
