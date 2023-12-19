@@ -8,7 +8,7 @@ import Link from "next/link";
 
 type Props = {
   workspace: WorkspaceType;
-  onClick: (option: WorkspaceType) => void;
+  onClick?: (option: WorkspaceType) => void;
 };
 
 const SelectedWorkspace: React.FC<Props> = ({ workspace, onClick }) => {
@@ -33,15 +33,15 @@ const SelectedWorkspace: React.FC<Props> = ({ workspace, onClick }) => {
       className="flex flex-row items-center justify-center gap-4 p-2 my-2 transition-all rounded-md cursor-pointer hover:bg-muted"
     >
       <Image
-        src={Logo}
+        src={logo}
         alt="workspace logo"
         width={26}
         height={26}
-        objectFit="cover"
+        className="object-cover object-center rounded-full"
       />
       <div className="flex flex-col">
         <p
-          className="text-lg 
+          className="text-base 
         w-[170px] 
         overflow-hidden 
         overflow-ellipsis 
