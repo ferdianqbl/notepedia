@@ -6,10 +6,12 @@ import {
   SubscriptionType,
   WorkspaceType,
   FolderType,
+  UserType,
 } from "./supabase.types";
 import { files, folders, users, workspaces } from "../../../migrations/schema";
 import { and, eq, exists, notExists } from "drizzle-orm";
 import { collaborators } from "./schema";
+import { UUID } from "crypto";
 
 // Workspaces
 export const createWorkspace = async (workspace: WorkspaceType) => {
@@ -115,6 +117,36 @@ export const getSharedWorkspaces = async (userId: string) => {
       error
     );
     return { data: [], error: "Error" };
+  }
+};
+
+export const addCollaborators = async (
+  users: UserType[],
+  workspaceId: string
+) => {
+  try {
+    const res = users.forEach(async (user) => {
+      const userExists = await db.query.collaborators.findFirst({
+        where: (collaborator, { eq }) =>
+          and(
+            eq(collaborator.userId, user.id),
+            eq(collaborator.workspaceId, workspaceId)
+          ),
+      });
+
+      if (!userExists)
+        await db.insert(collaborators).values({
+          userId: user.id,
+          workspaceId: workspaceId,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        });
+    });
+
+    return { data: res, error: null };
+  } catch (error) {
+    console.log("Error adding collaborators (function addCollaborators): ");
+    return { data: null, error: "Error" };
   }
 };
 
