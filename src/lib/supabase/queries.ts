@@ -9,7 +9,7 @@ import {
   UserType,
 } from "./supabase.types";
 import { files, folders, users, workspaces } from "../../../migrations/schema";
-import { and, eq, exists, notExists } from "drizzle-orm";
+import { and, eq, exists, ilike, notExists } from "drizzle-orm";
 import { collaborators } from "./schema";
 import { UUID } from "crypto";
 
@@ -217,4 +217,15 @@ export const getFiles = async (folderId: string) => {
     console.log("Error getting files (function getFiles): ", error);
     return { data: null, error: "Error" };
   }
+};
+
+// Users
+export const getUsersFromSearch = async (email: string) => {
+  if (!email) return [];
+  const res = await db
+    .select()
+    .from(users)
+    .where(ilike(users.email, `%${email}%`));
+
+  return res;
 };

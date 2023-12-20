@@ -20,7 +20,7 @@ import { ScrollArea } from "../ui/scroll-area";
 import { v4 } from "uuid";
 import { addCollaborators, createWorkspace } from "@/lib/supabase/queries";
 import { useToast } from "../ui/use-toast";
-import CollaboratorSearch from "./collborator-search";
+import CollaboratorSearch from "./collaborator-search";
 
 const WorkspaceCreator = () => {
   const { user } = useSupabaseUser();
@@ -107,7 +107,7 @@ const WorkspaceCreator = () => {
           </SelectContent>
         </Select>
         {permissions === "shared" && (
-          <div>
+          <div className="flex flex-col items-start w-full gap-2">
             <CollaboratorSearch
               existingCollaborators={collaborators}
               getCollaborator={(user) => {
@@ -119,60 +119,50 @@ const WorkspaceCreator = () => {
                 Add Collaborators
               </Button>
             </CollaboratorSearch>
-            {/* <div>
-                <span className="text-sm text-muted-foreground">
-                  Collaborators {collaborators.length || ""}
-                </span>
-                <ScrollArea
-                  className="
-              h-[120px]
-              overflow-y-scroll
-              w-full
+            <div className="w-full">
+              <span className="text-sm text-muted-foreground">
+                {collaborators.length || ""} Collaborators
+              </span>
+              <ScrollArea
+                className="
+              h-[200px]
+              overflow-y-auto
               rounded-md
               border
               border-muted-foreground/20"
-                >
-                  {collaborators.length ? (
-                    collaborators.map((c) => (
-                      <div
-                        className="flex items-center justify-between p-4 "
-                        key={c.id}
-                      >
-                        <div className="flex items-center gap-4">
-                          <Avatar>
-                            <AvatarImage src="/avatars/7.png" />
-                            <AvatarFallback>PJ</AvatarFallback>
-                          </Avatar>
-                          <div
-                            className="text-sm 
-                            gap-2
-                            text-muted-foreground
-                            overflow-hidden
-                            overflow-ellipsis
-                            sm:w-[300px]
-                            w-[140px]
-                          "
-                          >
-                            {c.email}
-                          </div>
+              >
+                {collaborators.length ? (
+                  collaborators.map((c) => (
+                    <div
+                      className="flex items-center justify-center w-full gap-4 p-4"
+                      key={c.id}
+                    >
+                      <div className="flex items-center w-full gap-4">
+                        <Avatar>
+                          <AvatarImage src="/avatars/7.png" />
+                          <AvatarFallback>PJ</AvatarFallback>
+                        </Avatar>
+                        <div className="gap-2 overflow-hidden text-sm text-muted-foreground overflow-ellipsis ">
+                          {c.email}
                         </div>
-                        <Button
-                          variant="secondary"
-                          onClick={() => removeCollaborator(c)}
-                        >
-                          Remove
-                        </Button>
                       </div>
-                    ))
-                  ) : (
-                    <div className="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center ">
-                      <span className="text-sm text-muted-foreground">
-                        You have no collaborators
-                      </span>
+                      <Button
+                        variant="secondary"
+                        onClick={() => removeCollaborator(c)}
+                      >
+                        Remove
+                      </Button>
                     </div>
-                  )}
-                </ScrollArea>
-              </div> */}
+                  ))
+                ) : (
+                  <div className="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center ">
+                    <span className="text-sm text-muted-foreground">
+                      You have no collaborators
+                    </span>
+                  </div>
+                )}
+              </ScrollArea>
+            </div>
           </div>
         )}
 
