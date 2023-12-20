@@ -30,7 +30,7 @@ const SelectedWorkspace: React.FC<Props> = ({ workspace, onClick }) => {
     <Link
       href={`/dashboard/${workspace.id}`}
       onClick={clickHandler}
-      className="flex flex-row items-center gap-2 px-4 py-2 transition-all duration-500 rounded-md cursor-pointer hover:bg-muted"
+      className="flex flex-row items-center w-full gap-2 px-4 py-2 transition-all duration-500 rounded-md cursor-pointer hover:bg-muted"
     >
       <Image
         src={logo}
@@ -39,11 +39,10 @@ const SelectedWorkspace: React.FC<Props> = ({ workspace, onClick }) => {
         height={26}
         className="object-cover object-center rounded-full"
       />
-      <div className="flex flex-col">
-        <p className="w-full overflow-hidden text-sm overflow-ellipsis whitespace-nowrap">
-          {workspace.title}
-        </p>
-      </div>
+
+      <p className="overflow-hidden text-sm overflow-ellipsis whitespace-nowrap">
+        {workspace.title}
+      </p>
     </Link>
   );
 };

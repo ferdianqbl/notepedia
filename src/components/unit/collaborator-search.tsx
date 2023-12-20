@@ -40,8 +40,13 @@ const CollaboratorSearch: React.FC<Props> = ({
     }, 450);
   };
 
-  const addCollaborator = (user: UserType) => {
-    getCollaborator(user);
+  const addCollaborator = (userCollaborator: UserType) => {
+    getCollaborator(userCollaborator);
+    setResults(
+      results.filter(
+        (result) => result.id !== userCollaborator.id && result.id !== user?.id
+      )
+    );
   };
 
   useEffect(() => {
