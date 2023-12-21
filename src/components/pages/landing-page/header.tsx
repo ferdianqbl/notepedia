@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   NavigationMenu,
@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { AuthUser } from "@supabase/supabase-js";
 
 const routes = [
   { title: "Features", href: "#features" },
@@ -63,7 +65,19 @@ const components: { title: string; href: string; description: string }[] = [
 ];
 
 const Header = () => {
+  const supabase = createClientComponentClient();
   const [path, setPath] = useState("#resources");
+  const [user, setUser] = useState<AuthUser | null>(null);
+  useEffect(() => {
+    const getUserData = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (user) setUser(user);
+    };
+    getUserData();
+  }, [supabase]);
+
   return (
     <header className="flex items-center justify-between p-4">
       <Link
@@ -173,18 +187,26 @@ const Header = () => {
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
-      <aside className="flex justify-end gap-2 ">
-        <Link href={"/login"}>
+      {user ? (
+        <Link href={"/dashboard"}>
           <Button variant="btn-secondary" className="hidden p-1 sm:block">
-            Login
+            Dashboard
           </Button>
         </Link>
-        <Link href="/register">
-          <Button variant="btn-primary" className="whitespace-nowrap">
-            Sign Up
-          </Button>
-        </Link>
-      </aside>
+      ) : (
+        <aside className="flex justify-end gap-2 ">
+          <Link href={"/login"}>
+            <Button variant="btn-secondary" className="hidden p-1 sm:block">
+              Login
+            </Button>
+          </Link>
+          <Link href="/register">
+            <Button variant="btn-primary" className="whitespace-nowrap">
+              Sign Up
+            </Button>
+          </Link>
+        </aside>
+      )}
     </header>
   );
 };

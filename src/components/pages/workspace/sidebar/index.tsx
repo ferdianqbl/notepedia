@@ -10,6 +10,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import WorkspaceDropdown from "./workspace-dropdown";
+import PlanUsage from "./plan-usage";
 
 type Props = {
   params: { workspaceId: string };
@@ -58,6 +59,10 @@ const Sidebar: React.FC<Props> = async ({ params, className }) => {
         privateWorkspaces={privateWorkspaces.data}
         collaboratingWorkspaces={collaboratingWorkspaces.data}
         sharedWorkspaces={sharedWorkspaces.data}
+      />
+      <PlanUsage
+        foldersLength={folderData?.length || 0}
+        subscription={subscriptionData}
       />
     </aside>
   );
