@@ -11,6 +11,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import WorkspaceDropdown from "./workspace-dropdown";
 import PlanUsage from "./plan-usage";
+import Navigation from "./navigation";
 
 type Props = {
   params: { workspaceId: string };
@@ -64,6 +65,7 @@ const Sidebar: React.FC<Props> = async ({ params, className }) => {
         foldersLength={folderData?.length || 0}
         subscription={subscriptionData}
       />
+      <Navigation workspaceId={params.workspaceId} />
     </aside>
   );
 };

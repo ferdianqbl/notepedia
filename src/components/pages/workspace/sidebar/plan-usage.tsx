@@ -30,7 +30,7 @@ const PlanUsage: React.FC<Props> = ({ foldersLength, subscription }) => {
       {subscription?.status !== "active" && (
         <div className="w-full flex items-center justify-between text-muted-foreground">
           <p>
-            <Gem className="inline-block text-primary" /> Free Plan
+            <Gem className="inline-block text-primary w-5 h-5" /> Free Plan
           </p>
           <small>{usagePercentage.toFixed(0)}% / 100%</small>
         </div>
