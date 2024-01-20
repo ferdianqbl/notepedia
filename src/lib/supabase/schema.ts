@@ -15,7 +15,9 @@ export const workspaces = pgTable("workspaces", {
   createdAt: timestamp("created_at", {
     withTimezone: true,
     mode: "string",
-  }),
+  })
+    .defaultNow()
+    .notNull(),
   updatedAt: timestamp("updated_at", {
     withTimezone: true,
     mode: "string",
@@ -34,7 +36,9 @@ export const folders = pgTable("folders", {
   createdAt: timestamp("created_at", {
     withTimezone: true,
     mode: "string",
-  }),
+  })
+    .defaultNow()
+    .notNull(),
   updatedAt: timestamp("updated_at", {
     withTimezone: true,
     mode: "string",
@@ -57,7 +61,9 @@ export const files = pgTable("files", {
   createdAt: timestamp("created_at", {
     withTimezone: true,
     mode: "string",
-  }),
+  })
+    .defaultNow()
+    .notNull(),
   updatedAt: timestamp("updated_at", {
     withTimezone: true,
     mode: "string",

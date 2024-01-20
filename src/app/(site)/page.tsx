@@ -1,7 +1,6 @@
 import CustomCard from "@/components/pages/landing-page/custom-card";
 import TitleSection from "@/components/pages/landing-page/title-section";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import { CardDescription, CardTitle } from "@/components/ui/card";
 import { CLIENTS, USERS } from "@/lib/constants";
 import { cn } from "@/lib/utils";

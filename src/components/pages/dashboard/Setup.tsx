@@ -95,7 +95,7 @@ const Setup: React.FC<Props> = ({ subscription, user }) => {
         logo: filePath || null,
         bannerUrl: "",
       };
-      console.log({ newWorkspace });
+      // console.log({ newWorkspace });
       const { data, error: createError } = await createWorkspace(newWorkspace);
       if (createError) {
         throw new Error(`${{ createError }}`);
