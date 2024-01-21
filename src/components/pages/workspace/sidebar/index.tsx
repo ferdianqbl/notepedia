@@ -13,6 +13,7 @@ import WorkspaceDropdown from "./workspace-dropdown";
 import PlanUsage from "./plan-usage";
 import Navigation from "./navigation";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import FolderDropdownList from "./folder-dropdown-list";
 
 type Props = {
   params: { workspaceId: string };
@@ -69,10 +70,10 @@ const Sidebar: React.FC<Props> = async ({ params, className }) => {
       <Navigation workspaceId={params.workspaceId} />
       <ScrollArea className="overflow-auto relative h-[450px]">
         <div className="pointer-events-none w-full absolute bottom-0 h-20 bg-gradient-to-t from-background to-transparent z-40" />
-        {/* <FoldersDropdownList
-          workspaceFolders={workspaceFolderData || []}
+        <FolderDropdownList
+          workspaceFolders={folderData || []}
           workspaceId={params.workspaceId}
-        /> */}
+        />
       </ScrollArea>
     </aside>
   );

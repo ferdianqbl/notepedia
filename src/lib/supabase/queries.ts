@@ -200,6 +200,54 @@ export const getFolders = async (workspaceId: string) => {
   }
 };
 
+export const createFolder = async (folder: FolderType) => {
+  try {
+    const response = await db.insert(folders).values(folder);
+    return { data: null, error: null };
+  } catch (error) {
+    console.log("Error creating folder (function createFolder): ", error);
+    return { data: null, error: "Error" };
+  }
+};
+
+export const updateFolder = async (
+  folder: Partial<FolderType>,
+  folderId: string
+) => {
+  try {
+    await db.update(folders).set(folder).where(eq(folders.id, folderId));
+    return { data: null, error: null };
+  } catch (error) {
+    console.log(error);
+    return { data: null, error: "Error" };
+  }
+};
+
+export const deleteFolder = async (folderId: string) => {
+  if (!folderId) return;
+  await db.delete(files).where(eq(files.id, folderId));
+};
+
+export const getFolderDetails = async (folderId: string) => {
+  const isValid = validate(folderId);
+  if (!isValid) {
+    data: [];
+    error: "Error";
+  }
+
+  try {
+    const response = (await db
+      .select()
+      .from(folders)
+      .where(eq(folders.id, folderId))
+      .limit(1)) as FolderType[];
+
+    return { data: response, error: null };
+  } catch (error) {
+    return { data: [], error: "Error" };
+  }
+};
+
 // Files
 export const getFiles = async (folderId: string) => {
   const isValid = validate(folderId);
@@ -215,6 +263,34 @@ export const getFiles = async (folderId: string) => {
     return { data: results, error: null };
   } catch (error) {
     console.log("Error getting files (function getFiles): ", error);
+    return { data: null, error: "Error" };
+  }
+};
+
+export const deleteFile = async (fileId: string) => {
+  if (!fileId) return;
+  await db.delete(files).where(eq(files.id, fileId));
+};
+
+export const createFile = async (file: FileType) => {
+  try {
+    await db.insert(files).values(file);
+    return { data: null, error: null };
+  } catch (error) {
+    console.log(error);
+    return { data: null, error: "Error" };
+  }
+};
+
+export const updateFile = async (file: Partial<FileType>, fileId: string) => {
+  try {
+    const response = await db
+      .update(files)
+      .set(file)
+      .where(eq(files.id, fileId));
+    return { data: null, error: null };
+  } catch (error) {
+    console.log(error);
     return { data: null, error: "Error" };
   }
 };

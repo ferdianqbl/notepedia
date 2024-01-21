@@ -44,10 +44,9 @@ export const folders = pgTable("folders", {
     mode: "string",
   }).defaultNow(),
   title: text("title").notNull(),
-  iconId: uuid("icon_id").notNull(),
+  iconId: text("icon_id").notNull(),
   data: text("data"),
   inTrash: text("in_trash"),
-  logo: text("logo"),
   bannerUrl: text("banner_url"),
   workspaceId: uuid("workspace_id")
     .references(() => workspaces.id, {
@@ -69,7 +68,7 @@ export const files = pgTable("files", {
     mode: "string",
   }).defaultNow(),
   title: text("title").notNull(),
-  iconId: uuid("icon_id").notNull(),
+  iconId: text("icon_id").notNull(),
   data: text("data"),
   inTrash: text("in_trash"),
   logo: text("logo"),
