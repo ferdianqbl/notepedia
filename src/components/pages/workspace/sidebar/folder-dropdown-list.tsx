@@ -53,6 +53,13 @@ const FolderDropdownList: React.FC<Props> = ({
 
   const addFolderHandler = async () => {
     if (folders.length >= 3 && !subscription) {
+      toast({
+        title: "Error",
+        variant: "destructive",
+        description:
+          "You need to subscribe to create more than 3 folders in a workspace.",
+      });
+      return;
     }
     const newFolder: FolderType = {
       data: null,

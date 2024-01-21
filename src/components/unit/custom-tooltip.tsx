@@ -13,7 +13,7 @@ type Props = {
 const CustomTooltip: React.FC<Props> = ({ children, message }) => {
   return (
     <TooltipProvider>
-      <Tooltip>
+      <Tooltip delayDuration={100}>
         <TooltipTrigger>{children}</TooltipTrigger>
         <TooltipContent>{message}</TooltipContent>
       </Tooltip>

@@ -39,7 +39,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   const supabase = createClientComponentClient();
   const { toast } = useToast();
   const { user } = useSupabaseUser();
-  const { state, dispatch, workspaceId, folderId } = useAppState();
+  const { state, dispatch, workspaceId, folderId, fileId } = useAppState();
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
 
@@ -228,7 +228,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       } else {
         toast({
           title: "Success",
-          description: "Moved folder to trash",
+          description: "Moved file to trash",
         });
       }
     }
@@ -325,7 +325,11 @@ const Dropdown: React.FC<DropdownProps> = ({
           overflow-hidden"
           >
             <div className="relative">
-              <EmojiPicker getValue={onChangeEmoji}>{iconId}</EmojiPicker>
+              {listType === "folder" ? (
+                <EmojiPicker getValue={onChangeEmoji}>{iconId}</EmojiPicker>
+              ) : (
+                <span>{iconId}</span>
+              )}
             </div>
             <input
               type="text"
@@ -346,7 +350,9 @@ const Dropdown: React.FC<DropdownProps> = ({
             />
           </div>
           <div className={hoverStyles}>
-            <CustomTooltip message="Delete Folder">
+            <CustomTooltip
+              message={listType === "folder" ? "Delete Folder" : "Delete File"}
+            >
               <Trash
                 onClick={moveToTrash}
                 size={15}
